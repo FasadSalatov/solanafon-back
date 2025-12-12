@@ -1,0 +1,33 @@
+# Git
+.git
+.gitignore
+
+# Environment
+.env
+.env.local
+
+# Binaries
+bin/
+dist/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Tests
+*_test.go
+
+# Documentation
+*.md
+!README.md
+
+# Misc
+tmp/
+logs/
+.DS_Store

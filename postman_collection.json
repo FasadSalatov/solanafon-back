@@ -1,0 +1,409 @@
+{
+  "info": {
+    "name": "Solafon API",
+    "description": "API collection for Solafon backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080/api/v1"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Request OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/email/request",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "email", "request"]
+            }
+          }
+        },
+        {
+          "name": "Verify OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"code\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/email/verify",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "email", "verify"]
+            }
+          }
+        },
+        {
+          "name": "Get Me",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/me",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "me"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Get All Categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories",
+              "host": ["{{base_url}}"],
+              "path": ["categories"]
+            }
+          }
+        },
+        {
+          "name": "Get Apps by Category",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories/cards/apps",
+              "host": ["{{base_url}}"],
+              "path": ["categories", "cards", "apps"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "MiniApps",
+      "item": [
+        {
+          "name": "Get All MiniApps",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mini-apps",
+              "host": ["{{base_url}}"],
+              "path": ["mini-apps"]
+            }
+          }
+        },
+        {
+          "name": "Get MiniApp by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mini-apps/1",
+              "host": ["{{base_url}}"],
+              "path": ["mini-apps", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cards",
+      "item": [
+        {
+          "name": "Get All Cards",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/cards",
+              "host": ["{{base_url}}"],
+              "path": ["cards"]
+            }
+          }
+        },
+        {
+          "name": "Get Card by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/cards/1",
+              "host": ["{{base_url}}"],
+              "path": ["cards", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Solana Cards",
+      "item": [
+        {
+          "name": "Create Card",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/solana-cards",
+              "host": ["{{base_url}}"],
+              "path": ["solana-cards"]
+            }
+          }
+        },
+        {
+          "name": "Get My Cards",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/solana-cards",
+              "host": ["{{base_url}}"],
+              "path": ["solana-cards"]
+            }
+          }
+        },
+        {
+          "name": "Get Card by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/solana-cards/1",
+              "host": ["{{base_url}}"],
+              "path": ["solana-cards", "1"]
+            }
+          }
+        },
+        {
+          "name": "Top Up Card",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currency\": \"SOL\",\n  \"amountFiat\": 100\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/solana-cards/1/topup",
+              "host": ["{{base_url}}"],
+              "path": ["solana-cards", "1", "topup"]
+            }
+          }
+        },
+        {
+          "name": "Get Transactions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/solana-cards/1/transactions",
+              "host": ["{{base_url}}"],
+              "path": ["solana-cards", "1", "transactions"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/profile",
+              "host": ["{{base_url}}"],
+              "path": ["profile"]
+            }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"newemail@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/profile",
+              "host": ["{{base_url}}"],
+              "path": ["profile"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Secret Login",
+      "item": [
+        {
+          "name": "Get Numbers",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/secret/numbers",
+              "host": ["{{base_url}}"],
+              "path": ["secret", "numbers"]
+            }
+          }
+        },
+        {
+          "name": "Activate Number",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"numberId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/secret/activate",
+              "host": ["{{base_url}}"],
+              "path": ["secret", "activate"]
+            }
+          }
+        },
+        {
+          "name": "Get Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/secret/status",
+              "host": ["{{base_url}}"],
+              "path": ["secret", "status"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
