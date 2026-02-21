@@ -30,3 +30,16 @@
 * [Creating Apps](dev-studio/creating-apps.md)
 * [Managing Apps](dev-studio/managing-apps.md)
 * [Commands Reference](dev-studio/commands.md)
+
+## MCP Integration
+* [MCP Server Setup](mcp/setup.md)
+* [Tools Reference](mcp/tools.md)
+* [AI Development Guide](mcp/ai-development.md)
+
+## Code Examples
+* [Node.js Polling Bot](examples/node-polling.md)
+* [Node.js Webhook Bot](examples/node-webhook.md)
+* [Python Polling Bot](examples/python-polling.md)
+* [Python Webhook Bot](examples/python-webhook.md)
+* [Go Webhook Bot](examples/go-webhook.md)
+* [AI Bot with OpenAI](examples/ai-bot.md)

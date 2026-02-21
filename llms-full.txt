@@ -1,0 +1,221 @@
+# Solafon Platform — Full Documentation for LLMs
+
+> Complete documentation for AI assistants working with the Solafon platform.
+> Solafon is a platform for creating mini-apps and bots with a chat-based interface.
+
+---
+
+## Platform Overview
+
+Solafon enables developers to create and deploy mini-applications (mini-apps) that users interact with through a chat-based interface. Key features:
+
+- **For Users**: Browse apps by category, chat with apps, Mana Points economy, Secret Login
+- **For Developers**: Telegram-compatible Bot API, webhooks, polling, auto-response commands, Dev Studio
+- **Categories**: AI, Games, Trading, DePIN, DeFi, NFT, Staking, Services
+
+**Base URL**: `https://api.solafon.com/api/v1`
+
+---
+
+## Authentication
+
+### User Auth (JWT)
+```
+POST /auth/email/request  → {"email": "user@example.com"}
+POST /auth/email/verify   → {"email": "...", "code": "123456"}  → returns JWT token
+Header: Authorization: Bearer <JWT>
+```
+
+### Bot API Token
+Developers get an API token when creating an app. Used for Bot API endpoints.
+```
+Header: Authorization: Bearer <API_TOKEN>
+# or:
+Header: Authorization: <API_TOKEN>
+```
+
+---
+
+## Bot API (Developer Endpoints)
+
+Base: `/api/v1/bot` | Auth: API Token
+
+### GET /bot/getMe
+Returns bot info: id, title, username, is_verified, users_count, webhook_url.
+
+### POST /bot/sendMessage
+```json
+{"chat_id": 123, "text": "Hello!", "message_type": "text", "metadata": "{}"}
+```
+message_type: "text" | "image" | "button"
+metadata is a JSON string.
+
+Button metadata: `{"buttons": [{"text": "Buy", "action": "buy"}]}`
+Image metadata: `{"image_url": "https://..."}`
+
+### GET /bot/getUpdates
+Returns unread messages. Marks them as read. Message format:
+```json
+{"message_id": 1, "from": {"id": 1, "email": "...", "name": "...", "language": "en"}, "chat": {"id": 1, "type": "private"}, "date": 1704067200, "text": "Hello"}
+```
+
+### POST /bot/setWebhook
+```json
+{"url": "https://your-server.com/webhook"}
+```
+URL must be HTTPS. Payload format (Telegram-compatible):
+```json
+{"update_id": 1, "message": {"message_id": 1, "from": {...}, "chat": {...}, "date": 1704067200, "text": "Hello"}}
+```
+
+### POST /bot/deleteWebhook
+Remove webhook.
+
+### GET /bot/getWebhookInfo
+Returns: url, has_custom_certificate, pending_update_count.
+
+### POST /bot/setMyCommands
+```json
+{"commands": [{"command": "start", "description": "Start", "response": "Welcome!"}]}
+```
+Commands without "/" prefix. Commands with `response` auto-reply without hitting your server.
+
+### GET /bot/getMyCommands
+Returns array of commands.
+
+---
+
+## App Management API
+
+Auth: JWT
+
+### POST /apps
+Create app:
+```json
+{"title": "My App", "description": "...", "icon": "🤖", "category_id": 1, "bot_username": "myapp", "welcome_message": "Hi!"}
+```
+Returns app with `apiToken`.
+
+### GET /apps
+List approved apps. Filter: `?category=ai`
+
+### GET /apps/search?q=query
+Search by title/description.
+
+### GET /apps/my
+Your apps.
+
+### GET /apps/:id
+App details.
+
+### PUT /apps/:id
+Update app. Changes to title/description reset moderation.
+
+### DELETE /apps/:id
+Delete your app.
+
+### GET /apps/:id/settings
+Owner only. Returns app + apiToken + commands + webhookLogs.
+
+### POST /apps/:id/regenerate-token
+New API token.
+
+### Commands CRUD
+```
+GET    /apps/:id/commands
+POST   /apps/:id/commands       → {"command": "help", "description": "...", "response": "...", "is_enabled": true}
+PUT    /apps/:id/commands/:cmdId
+DELETE /apps/:id/commands/:cmdId
+```
+
+### Messages
+```
+GET  /apps/:id/messages
+POST /apps/:id/messages → {"content": "Hello", "message_type": "text"}
+```
+
+---
+
+## Categories
+
+```
+GET /categories
+GET /categories/:slug/apps
+```
+
+| # | Name | Slug | Icon |
+|---|------|------|------|
+| 1 | AI | ai | 🤖 |
+| 2 | Games | games | 🎮 |
+| 3 | Trading | trading | 📊 |
+| 4 | DePIN | depin | 🌐 |
+| 5 | DeFi | defi | 💎 |
+| 6 | NFT | nft | 🖼️ |
+| 7 | Staking | staking | 🔒 |
+| 8 | Services | services | 🛠️ |
+
+---
+
+## Profile & Mana Points
+
+```
+GET   /profile
+PATCH /profile → {"name": "...", "avatar": "...", "language": "en|ru"}
+PUT   /profile/settings → {"notificationsEnabled": true, "twoFactorEnabled": false}
+GET   /mana → balance + transactions
+POST  /mana/topup → {"amount": 100}
+```
+
+Pricing: 100 MP = $2.30, 500 MP = $11.50, 1000 MP = $23.00
+New users: 500 MP welcome bonus.
+
+---
+
+## Secret Login
+
+```
+GET    /secret/numbers     → available virtual numbers
+POST   /secret/activate    → {"number_id": 1} (deducts MP)
+GET    /secret/status
+DELETE /secret/deactivate
+```
+
+Standard: 50 MP, Premium: 100-150 MP.
+
+---
+
+## Dev Studio
+
+Chat interface at `POST /apps/devstudio/message`.
+
+Commands: /start, /help, /cancel, /newapp, /myapps, /edit, /delete, /token, /commands, /webhook
+
+App creation wizard: name → description → icon → category → username (must end with "app") → welcome message
+
+---
+
+## Response Formats
+
+User API: `{"data": {...}}` or `{"items": [...], "total": 42}` or `{"error": "..."}`
+Bot API: `{"ok": true, "result": {...}}` or `{"ok": false, "error_code": 400, "description": "..."}`
+
+Rate limits: 100 req/min (auth), 20 req/min (unauth).
+
+---
+
+## Tech Stack
+
+Go 1.21+, Fiber v2, GORM, PostgreSQL 15, JWT HS256.
+
+## Database Models
+
+User, OTP, ManaTransaction, Category, MiniApp, AppUser, AppMessage, BotCommand, WebhookLog, ConversationState, SecretNumber, SecretAccess.
+
+---
+
+## Quick Start
+
+1. Create app: `POST /apps` → get apiToken
+2. Set commands: `POST /bot/setMyCommands`
+3. Get messages: `GET /bot/getUpdates` (polling) or set webhook
+4. Send response: `POST /bot/sendMessage`

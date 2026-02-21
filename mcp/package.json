@@ -1,0 +1,38 @@
+{
+  "name": "@solafon/mcp-server",
+  "version": "1.0.0",
+  "description": "Solafon MCP Server - AI-powered development tools for building mini-apps and bots on the Solafon platform",
+  "main": "dist/index.js",
+  "bin": {
+    "solafon-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts"
+  },
+  "keywords": [
+    "solafon",
+    "mcp",
+    "model-context-protocol",
+    "ai-tools",
+    "solana",
+    "mini-apps",
+    "bot-api",
+    "claude",
+    "cursor"
+  ],
+  "author": "Solafon Team",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0",
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

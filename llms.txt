@@ -1,0 +1,57 @@
+# Solafon Platform
+
+> Solafon is a platform for creating mini-apps and bots with a chat-based interface on Solana.
+
+## Documentation
+
+- [Introduction](docs/README.md): Platform overview, features, architecture
+- [Quick Start](docs/getting-started/quick-start.md): Build your first bot in 5 minutes
+- [Authentication](docs/getting-started/authentication.md): JWT and API Token auth systems
+- [First App](docs/getting-started/first-app.md): Creating your first mini-app
+
+## API Reference
+
+- [API Overview](docs/api/overview.md): Base URL, response format, rate limits
+- [Auth API](docs/api/auth.md): Email OTP, JWT tokens
+- [Apps API](docs/api/apps.md): Mini-app CRUD operations
+- [Messages API](docs/api/messages.md): Chat messaging system
+- [Categories API](docs/api/categories.md): App categories (AI, Games, Trading, DeFi, etc.)
+- [Profile API](docs/api/profile.md): User profiles and settings
+- [Mana Points API](docs/api/mana.md): Internal currency system
+- [Secret Login API](docs/api/secret.md): Virtual phone numbers for privacy
+
+## Developer API (Bot API)
+
+- [Developer API Overview](docs/developer-api/overview.md): Telegram-style Bot API
+- [Bot Authentication](docs/developer-api/authentication.md): API token usage
+- [Send Messages](docs/developer-api/send-message.md): POST /bot/sendMessage
+- [Receive Messages](docs/developer-api/receive-messages.md): GET /bot/getUpdates (polling)
+- [Webhooks](docs/developer-api/webhooks.md): Real-time message delivery
+- [Bot Commands](docs/developer-api/commands.md): Define and manage bot commands
+
+## Dev Studio
+
+- [Dev Studio Overview](docs/dev-studio/overview.md): Chat-based app management
+- [Creating Apps](docs/dev-studio/creating-apps.md): 6-step wizard
+- [Managing Apps](docs/dev-studio/managing-apps.md): Edit, delete, configure
+- [Commands Reference](docs/dev-studio/commands.md): All Dev Studio commands
+
+## MCP Integration
+
+- [MCP Server Setup](docs/mcp/setup.md): Connect AI assistants to Solafon
+- [MCP Tools Reference](docs/mcp/tools.md): Available MCP tools
+- [AI Development Guide](docs/mcp/ai-development.md): Building with AI assistants
+
+## Code Examples
+
+- [Node.js Polling Bot](docs/examples/node-polling.md)
+- [Node.js Webhook Bot](docs/examples/node-webhook.md)
+- [Python Polling Bot](docs/examples/python-polling.md)
+- [Python Webhook Bot](docs/examples/python-webhook.md)
+- [Go Webhook Bot](docs/examples/go-webhook.md)
+- [AI Bot with OpenAI](docs/examples/ai-bot.md)
+
+## Project Architecture
+
+- [CLAUDE.md](CLAUDE.md): AI assistant context for the codebase
+- [Project Structure](docs/architecture.md): Backend architecture and patterns

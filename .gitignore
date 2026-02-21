@@ -38,3 +38,11 @@ Thumbs.db
 # Logs
 logs/
 *.log
+
+# Node (MCP server)
+node_modules/
+mcp/dist/
+mcp/node_modules/
+
+# Air
+tmp/
