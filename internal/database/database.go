@@ -24,6 +24,8 @@ func AutoMigrate(db *gorm.DB) error {
 		&models.User{},
 		&models.OTP{},
 		&models.ManaTransaction{},
+		&models.RefreshToken{},
+		&models.Session{},
 
 		// Apps
 		&models.Category{},
@@ -39,5 +41,37 @@ func AutoMigrate(db *gorm.DB) error {
 		// Secret Login
 		&models.SecretNumber{},
 		&models.SecretAccess{},
+
+		// Conversations
+		&models.Conversation{},
+		&models.ChatMessage{},
+
+		// Notifications
+		&models.Notification{},
+		&models.PushToken{},
+
+		// News Feed
+		&models.NewsPost{},
+		&models.NewsLike{},
+		&models.NewsComment{},
+
+		// Calls
+		&models.CallRoom{},
+		&models.CallParticipant{},
+
+		// Referral
+		&models.Referral{},
+
+		// Support & Legal
+		&models.FAQ{},
+		&models.SupportTicket{},
+		&models.LegalDocument{},
+
+		// Crash Reporting
+		&models.CrashReport{},
+
+		// Mana Points
+		&models.ManaPointTariff{},
+		&models.WalletNetwork{},
 	)
 }

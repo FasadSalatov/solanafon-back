@@ -72,10 +72,14 @@ func (h *ProfileHandler) getUserStats(userID uint) models.UserStats {
 	var stats models.UserStats
 
 	// Count user's created apps
-	h.db.Model(&models.MiniApp{}).Where("creator_id = ?", userID).Count((*int64)(&stats.AppsCount))
+	var appsCount int64
+	h.db.Model(&models.MiniApp{}).Where("creator_id = ?", userID).Count(&appsCount)
+	stats.AppsCount = int(appsCount)
 
 	// Count mana transactions
-	h.db.Model(&models.ManaTransaction{}).Where("user_id = ?", userID).Count((*int64)(&stats.TransactionsCount))
+	var txCount int64
+	h.db.Model(&models.ManaTransaction{}).Where("user_id = ?", userID).Count(&txCount)
+	stats.TransactionsCount = int(txCount)
 
 	// NFTs count (placeholder - would come from blockchain)
 	stats.NFTsCount = 0

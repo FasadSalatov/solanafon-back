@@ -56,9 +56,16 @@ func main() {
 		})
 	})
 
-	// Setup routes
-	api := app.Group("/api/v1")
-	routes.Setup(api, db, cfg)
+	// Serve uploaded files
+	app.Static("/uploads", cfg.UploadDir)
+
+	// Setup v1 routes (legacy)
+	v1 := app.Group("/api/v1")
+	routes.Setup(v1, db, cfg)
+
+	// Setup v2 routes (mobile app)
+	apiGroup := app.Group("/api")
+	routes.SetupAPI(apiGroup, db, cfg)
 
 	// Start server
 	port := os.Getenv("PORT")

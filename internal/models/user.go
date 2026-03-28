@@ -10,18 +10,42 @@ type User struct {
 	ID              uint           `gorm:"primarykey" json:"id"`
 	Email           string         `gorm:"unique;not null" json:"email"`
 	Name            string         `gorm:"default:'Solana User'" json:"name"`
+	DisplayName     string         `json:"displayName"`
 	Avatar          string         `json:"avatar"`
+	AvatarURL       string         `json:"avatarUrl"`
 	ManaPoints      int            `gorm:"default:0" json:"manaPoints"`
 	HasSecretAccess bool           `gorm:"default:false" json:"hasSecretAccess"`
 	Language        string         `gorm:"default:en" json:"language"`
+	ReferralCode    string         `gorm:"uniqueIndex" json:"referralCode"`
 
 	// Settings
 	NotificationsEnabled bool `gorm:"default:true" json:"notificationsEnabled"`
 	TwoFactorEnabled     bool `gorm:"default:false" json:"twoFactorEnabled"`
+	HapticFeedback       bool `gorm:"default:true" json:"hapticFeedback"`
+	PushNotifications    bool `gorm:"default:true" json:"pushNotifications"`
+	EmailNotifications   bool `gorm:"default:true" json:"emailNotifications"`
+	MarketingEmails      bool `gorm:"default:false" json:"marketingEmails"`
+	BiometricEnabled     bool `gorm:"default:false" json:"biometricEnabled"`
 
 	CreatedAt time.Time      `json:"createdAt"`
 	UpdatedAt time.Time      `json:"updatedAt"`
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
+}
+
+// GetDisplayName returns DisplayName or Name
+func (u *User) GetDisplayName() string {
+	if u.DisplayName != "" {
+		return u.DisplayName
+	}
+	return u.Name
+}
+
+// GetAvatarURL returns AvatarURL or Avatar
+func (u *User) GetAvatarURL() string {
+	if u.AvatarURL != "" {
+		return u.AvatarURL
+	}
+	return u.Avatar
 }
 
 // UserStats - computed stats for profile

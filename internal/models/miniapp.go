@@ -3,6 +3,7 @@ package models
 import (
 	"crypto/rand"
 	"encoding/hex"
+	"fmt"
 	"time"
 
 	"gorm.io/gorm"
@@ -34,12 +35,15 @@ type MiniApp struct {
 	Title       string         `gorm:"not null" json:"title"`
 	Subtitle    string         `json:"subtitle"`
 	Icon        string         `json:"icon"` // Emoji
+	IconURL     string         `json:"iconUrl,omitempty"`
 	CategoryID  uint           `gorm:"not null" json:"categoryId"`
 	Category    Category       `gorm:"foreignKey:CategoryID" json:"category,omitempty"`
 	IsSecret    bool           `gorm:"default:false" json:"isSecret"`
 	UsersCount  int            `gorm:"default:0" json:"usersCount"`
 	IsVerified  bool           `gorm:"default:false" json:"isVerified"`
+	IsTrending  bool           `gorm:"default:false" json:"isTrending"`
 	Description string         `gorm:"type:text" json:"description"`
+	LongDescription string    `gorm:"type:text" json:"longDescription,omitempty"`
 
 	// App URL (optional - if empty, works as bot-only)
 	URL string `json:"url,omitempty"`
@@ -49,12 +53,22 @@ type MiniApp struct {
 	Creator   *User `gorm:"foreignKey:CreatorID" json:"creator,omitempty"`
 
 	// Developer API credentials (for bot functionality)
-	APIToken   string `gorm:"unique" json:"-"`                    // Secret token for API calls
-	WebhookURL string `json:"webhookUrl,omitempty"`               // URL to receive messages
-	BotUsername string `gorm:"unique" json:"botUsername,omitempty"` // @myappbot style username
+	APIToken      string `gorm:"unique" json:"-"`
+	WebhookURL    string `json:"webhookUrl,omitempty"`
+	WebhookSecret string `json:"-"`
+	BotUsername   string `gorm:"unique" json:"botUsername,omitempty"`
 
 	// Bot welcome message (shown on /start)
-	WelcomeMessage string `gorm:"type:text" json:"welcomeMessage,omitempty"`
+	WelcomeMessage    string `gorm:"type:text" json:"welcomeMessage,omitempty"`
+	WelcomeBannerURL  string `json:"welcomeBannerUrl,omitempty"`
+
+	// Ratings & metadata
+	Rating       float64 `gorm:"default:0" json:"rating"`
+	ReviewsCount int     `gorm:"default:0" json:"reviewsCount"`
+	Tags         string  `gorm:"type:jsonb" json:"tags,omitempty"`
+	Screenshots  string  `gorm:"type:jsonb" json:"screenshots,omitempty"`
+	Permissions  string  `gorm:"type:jsonb" json:"permissions,omitempty"`
+	Version      string  `gorm:"default:1.0.0" json:"version"`
 
 	// Moderation
 	ModerationStatus ModerationStatus `gorm:"default:pending" json:"moderationStatus"`
@@ -64,6 +78,17 @@ type MiniApp struct {
 	CreatedAt time.Time      `json:"createdAt"`
 	UpdatedAt time.Time      `json:"updatedAt"`
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
+}
+
+// FormatUsersCount returns human-readable user count
+func (a *MiniApp) FormatUsersCount() string {
+	if a.UsersCount >= 1000000 {
+		return fmt.Sprintf("%.1fM", float64(a.UsersCount)/1000000)
+	}
+	if a.UsersCount >= 1000 {
+		return fmt.Sprintf("%.1fK", float64(a.UsersCount)/1000)
+	}
+	return fmt.Sprintf("%d", a.UsersCount)
 }
 
 // GenerateAPIToken creates a secure API token for the app
